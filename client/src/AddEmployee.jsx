@@ -1,13 +1,16 @@
 import { useState } from "react";
 import Axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 function AddEmployee({getEmployee}){
     const [name,setName] = useState("");
     const [age, setAge] = useState(0);
     const [country, setCountry] = useState("");
     const [position, setPosition] = useState("");
     const [wage, setWage] = useState(0);
-    const addEmployee = ()=>{
+    
+    const addHomenavigate = useNavigate();
+    const addEmployee = (e)=>{
+        e.preventDefault(); //prevent the default from submission while reload page
         Axios.post("http://localhost:3001/create",{
             name, //Sending the 'name' value from the state
             age,
@@ -15,7 +18,8 @@ function AddEmployee({getEmployee}){
             position,
             wage
         }).then(()=>{
-            getEmployee(); 
+            getEmployee();
+            addHomenavigate("/");
             //Once the employee has been added we wnat to refest the employlist
             //getEmployee is from parameter 
         })
@@ -65,7 +69,7 @@ function AddEmployee({getEmployee}){
                     onChange={(e)=>setWage(e.target.value)}
                 />
             </div>
-            <button onClick={addEmployee}>Add</button>
+            <button type="submit" onClick={addEmployee}>Add</button>
         </form>
         </>
     )

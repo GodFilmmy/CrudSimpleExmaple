@@ -49,7 +49,30 @@ app.post('/create' , (req,res)=>{
         }
     )
 })
-
+//Update
+app.put('/update',(req,res)=>{
+    const {id,name,age,country,position,wage} = req.body;
+    db.query("UPDATE employees SET name = ?, age = ?,country =?,position =?,wage =? WHERE id=?",
+        [name,age,country,position,wage,id] , (err,result)=>{
+            if(err){
+                console.log(err);
+            }else{
+                res.send("Employee Update Sucessfully");
+            }
+        }
+    )
+})
+//Delete an emplyee 
+app.delete('/delete/:id' , (req,res)=>{
+    const id = req.params.id;
+    db.query("DELETE FROM employees WHERE id =?" , [id], (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send("Employee deleted successfully");
+        }
+    })
+})
 app.listen(3001, ()=>{
     console.log("Server running on port 3001");
 })

@@ -1,4 +1,7 @@
-function EmployeeList({employeeList}){
+import { Link } from "react-router-dom";
+import UpdateEmployee from "./UpdateEmployee";
+
+function EmployeeList({employeeList,deleteEmployee}){
     return(
         <div className="information">
             <hr/>
@@ -11,7 +14,10 @@ function EmployeeList({employeeList}){
                         <p>Country: {val.country}</p>
                         <p>Position: {val.position}</p>
                         <p>Wage: {val.wage}</p>
-
+                        <Link to={`/update/${val.id}`}>
+                            <button>Update</button>
+                        </Link>
+                        <button onClick={()=>deleteEmployee(val.id)}>Delete</button>
                     </div>
                 </div>
             ))}
